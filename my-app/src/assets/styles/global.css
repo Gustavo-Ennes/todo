@@ -1,14 +1,17 @@
 .header {
     padding: 2%;
-    background-color: rgb(128, 0, 107);
+    background-color: #59981A;
     font-size: 50px;
     text-align: center;
     width: 100%;
-    color: white;
+    color: #ECF87F;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+
  }
  
  .footer {
-   padding: 2%;
+    padding: 2%;
     background-color: red;
     font-size: 50px;
     text-align: center;
@@ -16,25 +19,37 @@
  }
  
  .dashboard {
-   padding: 3% 1%;
+    padding: 3% 1%;
  }
 
 h1 {
-  text-align: center;
+    text-align: center;
+}
+
+h2, label, th{
+  color: #59981A;
+}
+
+.btn-danger{
+  background-color:#59981A !important;
+  border-color: #59981A !important;
+  color:#ECF87F !important;
 }
 
 .display-board {
-  width: 100%;
-  background-color: rgba(0, 119, 128, 0.719);
-  padding: 5%;
+    width: 100%;
+    background-color:#59981A;
+    color: #ECF87F;
+    padding: 5%;
 }
 
 .number {
-  color: red;
+  color: white;
   font-size: 75px;
   text-align: center;
 }
 
-.mrgnbtm {
-  margin-top: 20px;
+.border-effect{
+  border-bottom-left-radius: 55px;
+  border-top-right-radius: 55px;
 }

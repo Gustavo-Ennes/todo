@@ -6,22 +6,22 @@ const app = express(),
       port = 3080;
 
 // place holder for the data
-const users = [];
+const todos = [];
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../my-app/dist')));
 
-app.get('/api/users', (req, res) => {
-  console.log('api/users called!!!!!!!')
-  res.json(users);
+app.get('/api/todos', (req, res) => {
+  console.log('api/todos called!!!!!!!')
+  res.json(todos);
 });
 
-app.post('/api/user', (req, res) => {
-  const user = req.body.user;
-  user.id = randomId(10);
-  console.log('Adding user:::::', user);
-  users.push(user);
-  res.json("user addedd");
+app.post('/api/todos', (req, res) => {
+  const todo = req.body.todo;
+  todo.id = randomId(10);
+  console.log('Adding todo:::::', todo);
+  todos.push(todo);
+  res.json("todo addedd");
 });
 
 app.get('/', (req,res) => {

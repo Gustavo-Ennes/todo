@@ -1,61 +1,63 @@
 <template>
-  <div class="hello">
+  <div class="hello container-fluid">
     <Header />
-    <div class="container mrgnbtm">
-          <div class="row">
-            <div class="col-md-8">
-                <CreateUser @createUser="userCreate($event)" />
-            </div>
-            <div class="col-md-4">
-                <DisplayBoard :numberOfUsers="numberOfUsers" @getAllUsers="getAllUsers()" />
-            </div>
-          </div>
+    <div class="mt-4">
+      <div class="row">
+        <div class="col-md-8">
+            <CreateTodo @createTodo="todoCreate($event)" />
+        </div>
+        <div class="col-md-4 my-3 my-md-0 mt-md-4">
+            <DisplayBoard :numberOfTodos="numberOfTodos" @getAllTodos="getAllTodos()" />
+        </div>
+      </div>
     </div>
-    <div class="row mrgnbtm">
-        <Users v-if="users.length > 0" :users="users" />
+    <div class="row">
+        <div class='col mt-4'>
+          <Todos v-if="todos.length > 0" :todos="todos" />
+        </div>
     </div>
   </div>
 </template>
 
 <script>
 import Header from './Header.vue'
-import CreateUser from './CreateUser.vue'
+import CreateTodo from './CreateTodo.vue'
 import DisplayBoard from './DisplayBoard.vue'
-import Users from './Users.vue'
-import { getAllUsers, createUser } from '../services/UserService'
+import Todos from './Todos.vue'
+import { getAllTodos, createTodo } from '../services/UserService'
 
 export default {
   name: 'Dashboard',
   components: {
     Header,
-    CreateUser,
+    CreateTodo,
     DisplayBoard,
-    Users
+    Todos
   },
   data() {
       return {
-          users: [],
-          numberOfUsers: 0
+          todos: [],
+          numberOfTodos: 0
       }
   },
   methods: {
-    getAllUsers() {
-      getAllUsers().then(response => {
+    getAllTodos() {
+      getAllTodos().then(response => {
         console.log(response)
-        this.users = response
-        this.numberOfUsers = this.users.length
+        this.todos = response
+        this.numberOfTodos = this.todos.length
       })
     },
-    userCreate(data) {
+    todoCreate(data) {
       console.log('data:::', data)
-      createUser(data).then(response => {
+      createTodo(data).then(response => {
         console.log(response);
-        this.getAllUsers();
+        this.getAllTodos();
       });
     }
   },
   mounted () {
-    this.getAllUsers();
+    this.getAllTodos();
   }
 }
 </script>

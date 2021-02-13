@@ -1,11 +1,11 @@
 <template>
-    <div class="display-board">
-        <h4>Users Created</h4>
+    <div class="display-board border-effect">
+        <h4>Todos Created</h4>
         <div class="number">
-        {{numberOfUsers}}
+        {{numberOfTodos}}
         </div>
         <div class="btn">
-            <button @click='getAllUsers()' type="button" class="btn btn-warning">Get all Users</button>
+            <button @click='getAllTodos()' type="button" class="btn btn-warning text-light">Get all To-do's</button>
         </div>
     </div>
 </template>
@@ -13,10 +13,10 @@
 <script>
     export default {
         name: 'DisplayBoard',
-        props: ['numberOfUsers'],
+        props: ['numberOfTodos'],
         methods: {
-            getAllUsers() {
-                this.$emit('getAllUsers')
+            getAllTodos() {
+                this.$emit('getAllTodos');
             }
         }
     }

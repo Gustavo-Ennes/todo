@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        Vue.js With NodeJS
+        To-do Manager
     </div>
 </template>
 

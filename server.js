@@ -9,7 +9,7 @@ const app = express(),
 const todos = [];
 
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, '../my-app/dist')));
+app.use(express.static(path.join(__dirname, 'my-app/dist')));
 
 app.get('/api/todos', (req, res) => {
   console.log('api/todos called!!!!!!!')
@@ -25,7 +25,7 @@ app.post('/api/todos', (req, res) => {
 });
 
 app.get('/', (req,res) => {
-  res.sendFile(path.join(__dirname, '../my-app/build/index.html'));
+  res.sendFile(path.join(__dirname, 'my-app/build/index.html'));
 });
 
 app.listen(port, () => {

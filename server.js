@@ -1,9 +1,10 @@
+const cool = require('cool-ascii-faces');
 const express = require('express');
 const path = require('path');
 const randomId = require('random-id');
 const app = express(),
       bodyParser = require("body-parser");
-      port = 3080;
+      port = process.env.PORT || 5000;
 
 // place holder for the data
 const todos = [];
@@ -25,8 +26,11 @@ app.post('/api/todos', (req, res) => {
 });
 
 app.get('/', (req,res) => {
-  res.sendFile(path.join(__dirname, 'my-app/build/index.html'));
+  res.sendFile(path.join(__dirname, 'my-app/dist/index.html'));
 });
+
+
+app.get('/cool', (req, res) => res.send(cool()));
 
 app.listen(port, () => {
     console.log(`Server listening on the port::${port}`);

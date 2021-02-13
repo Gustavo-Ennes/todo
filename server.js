@@ -2,9 +2,9 @@ const cool = require('cool-ascii-faces');
 const express = require('express');
 const path = require('path');
 const randomId = require('random-id');
-const app = express(),
-      bodyParser = require("body-parser");
-      port = process.env.PORT || 5000;
+const app = express();
+const bodyParser = require("body-parser");
+const port = process.env.PORT || 5000;
 
 // place holder for the data
 const todos = [];

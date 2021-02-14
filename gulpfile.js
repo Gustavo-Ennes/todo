@@ -9,9 +9,9 @@ var exec = require('child_process').exec;
 
 const paths = {
   prod_build: '../prod-build',
-  server_file_name: 'server.bundle.js',
-  react_src: '../my-app/build/**/*',
-  react_dist: '../prod-build/my-app/build',
+  server_file_name: 'server.js',
+  react_src: '../my-app/dist/**/*',
+  react_dist: '../my-app/build',
   zipped_file_name: 'react-nodejs.zip'
 };
 

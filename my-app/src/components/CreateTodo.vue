@@ -11,15 +11,15 @@
                     </div>
                     <div class="form-group col-12">
                         <label htmlFor="description">Description</label>
-                        <textarea type="textArea" class="form-control" v-model="description" name="description" id="description" placeholder="Anything you want about this todo...." rows=6></textarea>
+                        <textarea type="textArea" class="form-control" v-model="description" name="description" id="description" placeholder="Anything you want about this todo...." rows=2></textarea>
                     </div>
                 </div>
-                <input type="hidden" v-model="status" name="status" id="status" aria-describedby="emailHelp" />
+                <input type="hidden" v-model="status" name="status" id="status" />
 
-                <button type="button" @click='createTodo()' class="btn btn-danger">Create</button>
+                <button type="button" @click="createTodo" class="btn btn-danger">Create</button>
             </form>
         </div>
-    </div>
+      </div>
     </div>
 </template>
 
@@ -34,15 +34,14 @@ export default {
     }
   },
   methods: {
-      createTodo() {
-          console.log(this.title);
+      createTodo(){
           const payload = {
               title: this.title,
               description: this.description,
               status: this.status
-          }
+          };
           this.$emit('createTodo', payload);
-          this.clearForm();
+          this.clearForm()
       },
       clearForm() {
           this.title = "";

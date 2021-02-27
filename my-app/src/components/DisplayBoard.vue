@@ -1,11 +1,18 @@
 <template>
     <div class="display-board border-effect">
-        <h4>Todos Created</h4>
-        <div class="number">
-        {{numberOfTodos}}
-        </div>
-        <div class="btn">
-            <button @click='getAllTodos()' type="button" class="btn btn-warning text-light">Get all To-do's</button>
+        <div class='row'>
+            <div class='col-6'>
+                <h4>Todo's Created</h4>
+                <div class="number">
+                {{numberOfTodos}}
+                </div>
+            </div>
+            <div class='col-6'>
+                <h4>Done Todo's</h4>
+                <div class="number">
+                {{numberOfFinishedTodos}}
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -13,11 +20,6 @@
 <script>
     export default {
         name: 'DisplayBoard',
-        props: ['numberOfTodos'],
-        methods: {
-            getAllTodos() {
-                this.$emit('getAllTodos');
-            }
-        }
+        props: ['numberOfTodos', 'numberOfFinishedTodos']
     }
 </script>

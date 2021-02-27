@@ -9,11 +9,18 @@
     border-bottom-right-radius: 25px;
 
  }
+
+ .border{
+   box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.1);
+   border-radius: 10px;
+   border:0;
+ }
  
  .footer {
+    margin-top: 50px;
     padding: 2%;
-    background-color: red;
-    font-size: 50px;
+    background-color: #3B1B96;
+    font-size: 15px;
     text-align: center;
     width: 100%
  }
@@ -30,10 +37,8 @@ h2, label, th{
   color: #59981A;
 }
 
-.btn-danger{
-  background-color:#59981A !important;
-  border-color: #59981A !important;
-  color:#ECF87F !important;
+.btn-warning{
+  border-bottom-left-radius: 15px;
 }
 
 .display-board {

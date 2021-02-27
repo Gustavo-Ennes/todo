@@ -1,19 +1,36 @@
 <template>
   <div class="hello container-fluid">
     <Header />
-    <div class="mt-4">
+    <div class="mt-4 my-3">
       <div class="row">
         <div class="col-md-8">
-            <CreateTodo @createTodo="todoCreate($event)" />
+            <CreateTodo @createTodo="todoCreate" />
         </div>
         <div class="col-md-4 my-3 my-md-0 mt-md-4">
-            <DisplayBoard :numberOfTodos="numberOfTodos" @getAllTodos="getAllTodos()" />
+            <DisplayBoard :numberOfTodos="numberOfTodos" :numberOfFinishedTodos="numberOfFinishedTodos"/>
         </div>
       </div>
     </div>
-    <div class="row">
-        <div class='col mt-4'>
-          <Todos v-if="todos.length > 0" :todos="todos" />
+    <div class="row mr-3">
+        <div class='col-8'>
+          <TodoList 
+            @deleteTodo="deleteTodo" 
+            :todos='todos' 
+            :title="'Todos'"
+            :showDeleteButton="true"
+            @changeList='changeList'
+            @markAsDone='markAsDone'
+          />
+        </div>
+        <div class='col-4'>
+          <TodoList 
+            @deleteTodo="deleteTodo" 
+            :todos='done' 
+            :title="'Dones'"
+            :showDeleteButton='false'
+            @changeList='changeList'
+            @markAsDone='markAsDone'
+          />
         </div>
     </div>
   </div>
@@ -23,8 +40,8 @@
 import Header from './Header.vue'
 import CreateTodo from './CreateTodo.vue'
 import DisplayBoard from './DisplayBoard.vue'
-import Todos from './Todos.vue'
-import { getAllTodos, createTodo } from '../services/UserService'
+import TodoList from './TodoList.vue'
+import { createTodo } from '../services/UserService'
 
 export default {
   name: 'Dashboard',
@@ -32,32 +49,89 @@ export default {
     Header,
     CreateTodo,
     DisplayBoard,
-    Todos
+    TodoList
   },
   data() {
       return {
           todos: [],
-          numberOfTodos: 0
+          done:[],
+          numberOfTodos: 0,
+          numberOfFinishedTodos:0
       }
   },
   methods: {
-    getAllTodos() {
-      getAllTodos().then(response => {
-        console.log(response)
-        this.todos = response
-        this.numberOfTodos = this.todos.length
-      })
+    async markAsDone(data){
+      let status = data.status === 'todo' ? 'done' : 'todo'
+      let url = `http://localhost:5000/api/todos/?_id=${data.id}`;
+      let res =  await fetch(url, { 
+          method: 'PUT', 
+          headers: { 
+              'Content-type': 'application/json'
+          },
+          body: JSON.stringify({status: status})
+      });
+      console.log(res);
+      this.fetchTodos();
+    },
+    async changeList(){
+      await this.fetchTodos();
+    },
+    letMeSee(){
+      console.log(
+        "this is my data:\n\ntodos:\n"
+        + JSON.stringify(this.todos) 
+        + "\ndone:\n" 
+        + JSON.stringify(this.done)
+        + "\nnumber of Todo's: \n" 
+        + this.numberOfTodos
+        + "\nnumber of Done Todo's: \n"
+        + this.numberOfFinishedTodos
+      );
+    },
+    async fetchFinished(){
+      const response = await fetch('http://localhost:5000/api/todos/finished');
+      const json = await response.json();
+      this.done = json.todos;
+      this.numberOfFinishedTodos = this.done ? this.done.length : 0;
+      console.log("Just fetched this finished todos:\n\n" + JSON.stringify(this.done))
+    },
+    async fetchUnfinished(){
+      const response = await fetch('http://localhost:5000/api/todos/unfinished');
+      const json = await response.json();
+      this.todos = json.todos;
+      this.numberOfTodos = this.todos ? this.todos.length : 0;
+      console.log("Just fetched this todos:\n\n" + JSON.stringify(this.todos))
+    },
+    async fetchTodos(){
+      this.fetchUnfinished();
+      this.fetchFinished();
+    },
+    async deleteTodo(todo){
+
+      console.log("todo id sent to api: " + JSON.stringify(todo.id));
+      let url = "http://localhost:5000/api/todos/?_id=" + todo.id;
+      console.log("URl generated: " + url);
+      let res =  await fetch(url, { 
+          method: 'DELETE', 
+          headers: { 
+              'Content-type': 'application/json'
+          },
+      });
+      await this.fetchTodos();
+      return res 
     },
     todoCreate(data) {
       console.log('data:::', data)
-      createTodo(data).then(response => {
+      createTodo(data).then(async response => {
         console.log(response);
-        this.getAllTodos();
+        await this.fetchTodos();
       });
     }
   },
-  mounted () {
-    this.getAllTodos();
+  async mounted(){
+    await this.fetchTodos();
+    console.log("todos fetched by dashboard at mounting:");
+    console.log(this.todos);
   }
 }
 </script>

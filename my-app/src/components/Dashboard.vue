@@ -61,14 +61,15 @@ export default {
   },
   methods: {
     async markAsDone(data){
-      let status = data.status === 'todo' ? 'done' : 'todo'
+      let status = data.status === 'todo' ? 'done' : 'todo';
       let url = `http://localhost:5000/api/todos/?_id=${data.id}`;
+      let body = {status: status};
       let res =  await fetch(url, { 
           method: 'PUT', 
           headers: { 
               'Content-type': 'application/json'
           },
-          body: JSON.stringify({status: status})
+          body: JSON.stringify(body)
       });
       console.log(res);
       this.fetchTodos();

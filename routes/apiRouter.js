@@ -5,13 +5,13 @@ const router = express.Router();
 
 router.post('/todos/', async(req,res) => {
 	try{
-		console.log("This is the req.body::\n" + JSON.stringify(req.body));
+		console.log("This is the req.body::\n" + req.body);
 		const todo = await Todo.create(req.body);
 		console.log('to-do created: ');
 		console.log(todo);
 		res.send({todo});
 	}catch{
-		res.status(400).send({error: "Impossible to create a todo."});
+		res.status(400).send({error:  "Impossible to create a todo."});
 	};
 });
 
@@ -58,7 +58,7 @@ router.put('/todos/', async(req,res) => {
 		await Todo.updateOne({_id: req.query._id}, body);
 		res.send(Todo.find())
 	}catch(err){
-		console.log(`Error: Impossible to update a todo: ${err}`)
+		console.log(`Error at line ${err.lineNumber}:${err.message}\nSTACK:\n\n${err.stack}`)
 	}
 });
 

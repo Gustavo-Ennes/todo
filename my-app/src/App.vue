@@ -26,7 +26,7 @@
     },
     methods: {
       getURL(){
-        return debug === true ? "http://localhost:5000/api/todos" : "https://kratodo.herokuapp.com/api/todos"
+        return this.debug === true ? "http://localhost:5000/api/todos" : "https://kratodo.herokuapp.com/api/todos"
       }
     }
   }

@@ -41,7 +41,6 @@ import Header from './Header.vue'
 import CreateTodo from './CreateTodo.vue'
 import DisplayBoard from './DisplayBoard.vue'
 import TodoList from './TodoList.vue'
-import { createTodo } from '../services/UserService'
 
 export default {
   name: 'Dashboard',
@@ -91,43 +90,60 @@ export default {
       );
     },
     async fetchFinished(){
-      const response = await fetch(`${this.url}/finished`);
-      const json = await response.json();
-      this.done = json.todos;
-      this.numberOfFinishedTodos = this.done ? this.done.length : 0;
-      console.log("Just fetched this finished todos:\n\n" + JSON.stringify(this.done))
+      try{
+        const response = await fetch(`${this.url}/finished`);
+        const json = await response.json();
+        this.done = json.todos;
+        this.numberOfFinishedTodos = this.done ? this.done.length : 0;
+        console.log("Just fetched this finished todos:\n\n" + JSON.stringify(this.done))
+      }catch(err){
+        console.error(err)
+      }
     },
     async fetchUnfinished(){
-      const response = await fetch(`${this.url}/unfinished`);
-      const json = await response.json();
-      this.todos = json.todos;
-      this.numberOfTodos = this.todos ? this.todos.length : 0;
-      console.log("Just fetched this todos:\n\n" + JSON.stringify(this.todos))
+      try{
+        const response = await fetch(`${this.url}/unfinished`);
+        const json = await response.json();
+        this.todos = json.todos;
+        this.numberOfTodos = this.todos ? this.todos.length : 0;
+        console.log("Just fetched this todos:\n\n" + JSON.stringify(this.todos))
+      }catch(err){
+        console.error(err);
+      }
     },
     async fetchTodos(){
       this.fetchUnfinished();
       this.fetchFinished();
     },
     async deleteTodo(todo){
-
-      console.log("todo id sent to api: " + JSON.stringify(todo.id));
-      let url = `${this.url}/?_id=${todo.id}`;
-      console.log("URl generated: " + url);
-      let res =  await fetch(url, { 
-          method: 'DELETE', 
-          headers: { 
-              'Content-type': 'application/json'
-          },
-      });
-      await this.fetchTodos();
-      return res 
-    },
-    todoCreate(data) {
-      console.log('data:::', data)
-      createTodo(data).then(async response => {
-        console.log(response);
+      try{
+        console.log("todo id sent to api: " + JSON.stringify(todo.id));
+        let url = `${this.url}/?_id=${todo.id}`;
+        console.log("URl generated: " + url);
+        let res =  await fetch(url, { 
+            method: 'DELETE', 
+            headers: { 
+                'Content-type': 'application/json'
+            },
+        });
         await this.fetchTodos();
-      });
+        return res 
+      }catch(err){
+        console.error(err);
+      }
+    },
+    async todoCreate(data) {
+      
+      console.log("Create sent...\nData passed to api:");
+      console.log(JSON.stringify(data));
+
+      const response = await fetch(this.url, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(data)
+      })
+      await this.fetchTodos();
+      return await response.json();
     }
   },
   async mounted(){

@@ -7,7 +7,6 @@ const connectionParams={
     useCreateIndex: true,
     useUnifiedTopology: true 
 }
-console.log(`This is the pass: ${pass}`);
 
 mongoose.connect(url,connectionParams).catch( (err) => {
 		console.error(`Error connecting to the database. \n${err}\n${process.env.DBPASS}`);

@@ -9,8 +9,9 @@
         <div class='col-12 col-sm-8 col-lg-8'>
             <div class='mt-1'>
                 <h5 class='text-center' v-bind:class='{isToogled: isDone()}'>
-                    {{ todo.title }} - {{ todo.status }}
+                    {{ todo.title }}
                 </h5>
+                <small class='text-center'>{{ todo.description }}</small>
             </div>
         </div>
         <div class='col-lg-2' v-if='showDeleteButton'>    

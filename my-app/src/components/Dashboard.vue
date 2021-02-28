@@ -45,6 +45,7 @@ import { createTodo } from '../services/UserService'
 
 export default {
   name: 'Dashboard',
+  props:['url'],
   components: {
     Header,
     CreateTodo,
@@ -62,7 +63,7 @@ export default {
   methods: {
     async markAsDone(data){
       let status = data.status === 'todo' ? 'done' : 'todo';
-      let url = `http://localhost:5000/api/todos/?_id=${data.id}`;
+      let url = `${this.url}/?_id=${data.id}`;
       let body = {status: status};
       let res =  await fetch(url, { 
           method: 'PUT', 
@@ -90,14 +91,14 @@ export default {
       );
     },
     async fetchFinished(){
-      const response = await fetch('http://localhost:5000/api/todos/finished');
+      const response = await fetch(`${this.url}/finished`);
       const json = await response.json();
       this.done = json.todos;
       this.numberOfFinishedTodos = this.done ? this.done.length : 0;
       console.log("Just fetched this finished todos:\n\n" + JSON.stringify(this.done))
     },
     async fetchUnfinished(){
-      const response = await fetch('http://localhost:5000/api/todos/unfinished');
+      const response = await fetch(`${this.url}/unfinished`);
       const json = await response.json();
       this.todos = json.todos;
       this.numberOfTodos = this.todos ? this.todos.length : 0;
@@ -110,7 +111,7 @@ export default {
     async deleteTodo(todo){
 
       console.log("todo id sent to api: " + JSON.stringify(todo.id));
-      let url = "http://localhost:5000/api/todos/?_id=" + todo.id;
+      let url = `${this.url}/?_id=${todo.id}`;
       console.log("URl generated: " + url);
       let res =  await fetch(url, { 
           method: 'DELETE', 

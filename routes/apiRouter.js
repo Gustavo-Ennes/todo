@@ -58,7 +58,7 @@ router.put('/todos/', async(req,res) => {
 		await Todo.updateOne({_id: req.query._id}, body);
 		res.send(Todo.find())
 	}catch(err){
-		console.log(`Error at line ${err.lineNumber}:${err.message}\nSTACK:\n\n${err.stack}`)
+		console.log(err.message);
 	}
 });
 

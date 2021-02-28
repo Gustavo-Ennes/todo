@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Dashboard />
+    <Dashboard :url='getURL()'/>
     <Footer />
   </div>
 </template>
@@ -15,9 +15,19 @@
 
   export default {
     name: 'App',
+    data(){
+      return {
+        debug: false,
+      }
+    },
     components: {
       Dashboard,
       Footer
+    },
+    methods: {
+      getURL(){
+        return debug === true ? "http://localhost:5000/api/todos" : "https://kratodo.herokuapp.com/api/todos"
+      }
     }
   }
 

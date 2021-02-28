@@ -8,12 +8,14 @@
         </div>
         <div class='col-12 col-sm-8 col-lg-8'>
             <div class='mt-1'>
-                <p v-bind:class='{isToogled: isDone()}'>
+                <h5 class='text-center' v-bind:class='{isToogled: isDone()}'>
                     {{ todo.title }} - {{ todo.status }}
-                </p>
+                </h5>
             </div>
         </div>
-        <div class='col-lg-2' v-if='showDeleteButton'>                
+        <div class='col-lg-2' v-if='showDeleteButton'>    
+            <i class="far fa-trash-alt text-danger" @click="$emit('deleteTodo', $data)" data-bs-toggle="tooltip" data-bs-placement="top" title="Exclude this todo!"></i>
+
             <b-button @click="$emit('deleteTodo', $data)" variant="danger" block>X</b-button>
         </div>
     </div>

@@ -1,9 +1,9 @@
 <template>
-    <div class='row'>
+    <div class='row todo'>
         <div class='col-12 col-sm-4 col-lg-2'>
             <div>
-                <i class="far fa-thumbs-up text-secondary" v-if="!isDone()" @click="$emit('markAsDone', doneData())"></i>
-                <i class="fas fa-check text-success" v-if="isDone()" @click="$emit('markAsDone', doneData())"></i>
+                <i class="far fa-thumbs-up text-secondary" v-if="!isDone()" @click="$emit('markAsDone', doneData())" data-bs-toggle="tooltip" data-bs-placement="top" title="Mark as done!"></i>
+                <i class="fas fa-check text-success" v-if="isDone()" @click="$emit('markAsDone', doneData())" data-bs-toggle="tooltip" data-bs-placement="top" title="If you want to undone..."></i>
             </div>
         </div>
         <div class='col-12 col-sm-8 col-lg-8'>

@@ -7,7 +7,7 @@
     color: #ECF87F;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
-
+    text-shadow: 1px 1px 2px #ECF87F ;
  }
  p, label, h1, h2, h3, h4, h5, small, a{
   font-family: 'Cairo', sans-serif;
@@ -15,8 +15,13 @@
 
  .siteTitle{
   font-family: 'Stick', sans-serif;
-  text-shadow: 1px 1px 2px #ECF87F ;
  }
+
+ /*
+ .textBrand{
+
+ }
+ */
 
  .border{
    box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.1);
@@ -30,7 +35,8 @@
     background-color: #59981A;
     font-size: 15px;
     text-align: center;
-    width: 100%
+    width: 100%;
+    color:#ECF87F;
  }
  
  .dashboard {

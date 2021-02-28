@@ -1,14 +1,7 @@
 <template>
-    <div class='row header'>
-        <div class='col-12 col-lg-4'>
-            <h2 class='siteTitle'>kratodo</h2>
-        </div>
-        <div class="col-12 col-lg-4 header">
-            To-do Manager
-        </div>
-        <div class='col-12 col-lg-4'>
-
-        </div>
+    <div class="header">
+        <h1 class='display-2'>kratodo</h1>
+        <small>A simple to-do app</small>
     </div>
 </template>
 

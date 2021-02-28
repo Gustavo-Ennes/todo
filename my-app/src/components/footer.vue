@@ -15,6 +15,7 @@
                 <p>tech 3</p>
                 <p>tech 4</p>
             </div>
+            <small class='textBrand'>&copy; KratosDEV 2021</small>
         </div>
     </div>
 </template>

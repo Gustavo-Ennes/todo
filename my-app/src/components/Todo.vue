@@ -2,7 +2,8 @@
     <div class='row'>
         <div class='col-12 col-sm-4 col-lg-2'>
             <div>
-                <button class='btn btn-info btn-sm' @click="$emit('markAsDone', doneData())">{{ buttonName }}</button>
+                <i class="far fa-thumbs-up text-secondary" v-if="!isDone()" @click="$emit('markAsDone', doneData())"></i>
+                <i class="fas fa-check text-success" v-if="isDone()" @click="$emit('markAsDone', doneData())"></i>
             </div>
         </div>
         <div class='col-12 col-sm-8 col-lg-8'>

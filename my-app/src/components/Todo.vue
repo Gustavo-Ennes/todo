@@ -15,8 +15,6 @@
         </div>
         <div class='col-lg-2' v-if='showDeleteButton'>    
             <i class="far fa-trash-alt text-danger" @click="$emit('deleteTodo', $data)" data-bs-toggle="tooltip" data-bs-placement="top" title="Exclude this todo!"></i>
-
-            <b-button @click="$emit('deleteTodo', $data)" variant="danger" block>X</b-button>
         </div>
     </div>
 </template>

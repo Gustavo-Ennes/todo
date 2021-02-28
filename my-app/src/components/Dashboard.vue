@@ -153,3 +153,8 @@ export default {
   }
 }
 </script>
+
+
+<style scoped>
+  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200&family=Stick&display=swap');
+</style>

@@ -17,7 +17,7 @@
     name: 'App',
     data(){
       return {
-        debug: false,
+        debug: true,
       }
     },
     components: {

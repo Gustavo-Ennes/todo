@@ -7,15 +7,15 @@
             </div>
         </div>
         <div class='col-12 col-sm-8 col-lg-8'>
-            <div class='mt-1'>
+            <div class='mt-1 text-center'>
                 <h5 class='text-center' v-bind:class='{isToogled: isDone()}'>
                     {{ todo.title }}
                 </h5>
-                <small class='text-center'>{{ todo.description }}</small>
+                <p class='text-center'><small class='text-center'>{{ todo.description }}</small></p>
             </div>
         </div>
-        <div class='col-lg-2' v-if='showDeleteButton'>    
-            <i class="far fa-trash-alt text-danger" @click="$emit('deleteTodo', $data)" data-bs-toggle="tooltip" data-bs-placement="top" title="Exclude this todo!"></i>
+        <div class='col-lg-2' v-if='showDeleteButton'> 
+            <i class="far fa-trash-alt text-danger float-right" @click="$emit('deleteTodo', $data)" data-bs-toggle="tooltip" data-bs-placement="top" title="Exclude this todo!"></i>
         </div>
     </div>
 </template>

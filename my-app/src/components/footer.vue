@@ -2,20 +2,26 @@
     <div class='footer'>
         <div class="row justify-content-center align-items-bottom">
             <div class='col-6'>
-                <h4>Useful resources:</h4>
-                <p>res 1</p>
-                <p>res 2</p>
-                <p>res 3</p>
-                <p>res 4</p>
+                <div class='row justify-content-center align-items-between'>
+                    <h4 class='col-12 mb-3'>Useful resources:</h4>
+                    <a class='col' href="https://nodejs.org/en/docs/">Node.js docs</a>
+                    <a class='col' href="https://docs.mongodb.com/">Mongo docs</a>
+                    <a class='col' href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript">Javascript docs</a>
+                    <a class='col' href="https://expressjs.com/pt-br/4x/api.html">Express.js docs</a>
+                    <a class='col' href="https://vuejs.org/v2/guide/">Vue docs</a>
+                </div>
             </div>
             <div class='col-6'>
-                <h4>Technologies used:</h4>
-                <p>tech 1</p>
-                <p>tech 2</p>
-                <p>tech 3</p>
-                <p>tech 4</p>
+                <div class='row justify-content-center align-items-between'>
+                    <h4 class='col-12 mb-3'>Technologies used:</h4>
+                    <i class="col fab fa-node"></i>
+                    <i class="col fab fa-js-square"></i>
+                    <i class="col fab fa-vuejs"></i>
+                    <img class='col footerImg'  src="https://img.icons8.com/color/48/000000/mongodb.png" alt="mongoDB"/>
+                    <img class='col footerImg'  src="https://cdn.iconscout.com/icon/free/png-64/express-8-1175029.png" alt="express.js">
+                </div>
             </div>
-            <small class='textBrand'>&copy; KratosDEV 2021</small>
+            <small class='textBrand mt-5 mb-0'>&copy; KratosDEV 2021</small>
         </div>
     </div>
 </template>
@@ -25,3 +31,14 @@ export default {
     name: 'footer'
 }
 </script>
+
+<style scoped>
+    .footerImg{
+        max-height: 50px !important;
+        max-width: 80px !important;
+    }
+    a{
+        text-decoration: none;
+        color: #ECF87F;
+    }
+</style>

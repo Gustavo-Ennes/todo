@@ -15,8 +15,11 @@
                     </div>
                 </div>
                 <input type="hidden" v-model="status" name="status" id="status" />
-
-                <button type="button" @click="createTodo" class="btn btn-danger">Create</button>
+                
+                <div v-if="isLoading" class="spinner-border text-success" role="status">
+                  <span class="sr-only"> Creating your todo...</span>
+                </div>
+                <button v-if="!isLoading" type="button" @click="createTodo" class="btn btn-danger">Create</button>
             </form>
         </div>
       </div>
@@ -26,11 +29,12 @@
 <script>
 export default {
   name: 'CreateTodo',
+  props:['isLoading'],
   data() {
     return {
       title: '',
       description: '',
-      status: 'todo'
+      status: 'todo',
     }
   },
   methods: {

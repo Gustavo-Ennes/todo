@@ -4,7 +4,7 @@
     <div class="mt-4 my-3">
       <div class="row">
         <div class="col-md-8">
-            <CreateTodo @createTodo="todoCreate" />
+            <CreateTodo @createTodo="todoCreate" :isLoading="isLoading"/>
         </div>
         <div class="col-md-4 my-3 my-md-0 mt-md-4">
             <DisplayBoard :numberOfTodos="numberOfTodos" :numberOfFinishedTodos="numberOfFinishedTodos"/>
@@ -56,11 +56,14 @@ export default {
           todos: [],
           done:[],
           numberOfTodos: 0,
-          numberOfFinishedTodos:0
+          numberOfFinishedTodos:0,
+          isLoading: false
       }
   },
   methods: {
     async markAsDone(data){
+      this.isLoading = true;
+
       let status = data.status === 'todo' ? 'done' : 'todo';
       let url = `${this.url}/?_id=${data.id}`;
       let body = {status: status};
@@ -73,6 +76,8 @@ export default {
       });
       console.log(res);
       this.fetchTodos();
+      
+      this.isLoading = false;
     },
     async changeList(){
       await this.fetchTodos();
@@ -112,11 +117,17 @@ export default {
       }
     },
     async fetchTodos(){
+      this.isLoading = true;
+
       this.fetchUnfinished();
       this.fetchFinished();
+
+      this.isLoading = false;
     },
     async deleteTodo(todo){
       try{
+        this.isLoading = true;
+
         console.log("todo id sent to api: " + JSON.stringify(todo.id));
         let url = `${this.url}/?_id=${todo.id}`;
         console.log("URl generated: " + url);
@@ -127,12 +138,16 @@ export default {
             },
         });
         await this.fetchTodos();
+
+        this.isLoading = false;
+
         return res 
       }catch(err){
         console.error(err);
       }
     },
     async todoCreate(data) {
+      this.isLoading =  true;
       
       console.log("Create sent...\nData passed to api:");
       console.log(JSON.stringify(data));
@@ -143,6 +158,9 @@ export default {
           body: JSON.stringify(data)
       })
       await this.fetchTodos();
+
+      this.isLoading = false;
+      
       return await response.json();
     }
   },

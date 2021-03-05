@@ -18,9 +18,10 @@
             :todos='todos' 
             :title="'Todos'"
             :showDeleteButton="true"
+            :canDrag='true'
             @changeList='changeList'
             @markAsDone='markAsDone'
-            @onDrop="onDrop"
+            @updateOrder="updateTodo"
           />
         </div>
         <div class='col-4'>
@@ -29,9 +30,10 @@
             :todos='done' 
             :title="'Dones'"
             :showDeleteButton='false'
+            :canDrag='false'
             @changeList='changeList'
             @markAsDone='markAsDone'
-            @onDrop="onDrop"
+            @updateOrder="updateTodo"
           />
         </div>
     </div>
@@ -63,16 +65,16 @@ export default {
       }
   },
   methods: {
-    async onDrop(payload){
-      this.updateTodo(payload.sender);
-      this.updateTodo(payload.receiver);
-    },
     async markAsDone(data){
       this.isLoading = true;
 
       let status = data.status === 'todo' ? 'done' : 'todo';
       let url = `${this.url}/?_id=${data.id}`;
-      let body = {status: status, order:this.getOrder(status)};
+      // the second arguement is this.getOrder() is the id
+      // if I send null, getOrder() will understand that
+      // this todo is a unfinished todo
+      let argID = data.status === 'done'? data.id : null
+      let body = {status: status, order:this.getOrder(status, argID)};
       let res =  await fetch(url, { 
           method: 'PUT', 
           headers: { 
@@ -157,7 +159,7 @@ export default {
       
       console.log("Create sent...\nData passed to api:");
       console.log(JSON.stringify(data));
-      data.order = this.getOrder(data.status);
+      data.order = this.getOrder(data.status, null);
       const response = await fetch(this.url, {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
@@ -169,23 +171,35 @@ export default {
 
       return await response.json();
     },
-    getOrder(type){
+    getOrder(type, id){
       let maxOrderTodo = 0;
       let maxOrderDone = 0;
       //if todo have no order number, like the first ones
       //we have to give they an order number before
       //to after get the highest order number to give to our new todo
-      this.todos.map(async todo =>{
+      this.todos.map(todo =>{
         if(todo.order > maxOrderTodo){
           maxOrderTodo = todo.order
         }
-      });
-      this.done.map(async done => {
-        if(done.order > maxOrderDone){
-          maxOrderDone = done.order
-        }
-      });
-      return type == 'todo' ? ++maxOrderTodo : ++maxOrderDone
+      })
+      //as the done list is filtered in decreasing id,
+      //it dont workds well with draggable element
+      //so I have to return 1 if type == 'done'
+      //and increase by 1 the order of the others
+      if( id ){
+        this.done.map(doneTodo =>{
+          if(doneTodo._id !== id){
+            doneTodo.order++
+            let payload = {
+              id: id,
+              order: doneTodo.order
+            }
+            this.$emit('updateTodo', payload)
+          }
+        })
+        return ++maxOrderDone
+      }
+      return ++maxOrderTodo 
     },
     async updateTodo(data){
       this.isLoading = true;

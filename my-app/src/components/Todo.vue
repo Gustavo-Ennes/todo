@@ -1,5 +1,5 @@
 <template>
-    <div class='row todo'>
+    <div v-cloak @drop.prevent="onDrop" @dragover.prevent class='row todo' draggable="true">
         <div class='col-12 col-sm-4 col-lg-2'>
             <div>
                 <i class="far fa-thumbs-up text-secondary" v-if="!isDone()" @click="$emit('markAsDone', doneData())" data-bs-toggle="tooltip" data-bs-placement="top" title="Mark as done!"></i>
@@ -33,7 +33,16 @@ export default {
             title: this.todo.title,
             description: this.todo.description,
             status: this.todo.status,
-            id: this.todo._id
+            id: this.todo._id,
+            order:this.todo.order,
+            files: [
+                {
+                    _id:this.id,
+                    order:this.order
+                }
+            ]/* debug is on
+            try to understand how to drag an item
+            almost there */
         };
     },
     methods:{
@@ -45,7 +54,19 @@ export default {
         },
         isDone(){
             return this.status === 'done' ? true : false;
-        }
+        },
+        onDrop(e){
+            console.log(e);
+            let order = e.dataTransfer.order;
+            let aux = this.order;
+            let emmitent = e.dataTransfer.emmitent
+            let payload = {}
+            this.order = order;
+            emmitent.order = aux;
+            payload.sender = {_id:emmitent.id, order:emmitent.order};
+            payload.receiver = {_id: this.id, order:this.order}
+            this.$emit('changeOrder', payload);
+        }   
     }
     
 }
@@ -54,5 +75,8 @@ export default {
 <style scoped>
     .isToogled{
         text-decoration: line-through;
+    }
+    .todo{
+        cursor: -moz-grab;
     }
 </style>

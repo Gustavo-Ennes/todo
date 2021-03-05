@@ -26,7 +26,7 @@ router.get('/todos/', async(req, res) => {
 
 router.get('/todos/finished/', async(req, res) => {
 	try{
-		const todos = await Todo.find({status: 'done'});
+		const todos = await Todo.find({status: 'done'}).sort({order:-1});
 		res.send({todos})
 	}catch(err){
 		res.status(400).send({error: "Impossible to find finished todo's."});
@@ -35,7 +35,7 @@ router.get('/todos/finished/', async(req, res) => {
 
 router.get('/todos/unfinished/', async(req, res) => {
 	try{
-		const todos = await Todo.find({status: 'todo'});
+		const todos = await Todo.find({status: 'todo'}).sort({order:1});
 		res.send({todos})
 	}catch(err){
 		res.status(400).send({error: "Impossible to find unfinixhed todo's."});		

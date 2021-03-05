@@ -20,6 +20,7 @@
             :showDeleteButton="true"
             @changeList='changeList'
             @markAsDone='markAsDone'
+            @onDrop="onDrop"
           />
         </div>
         <div class='col-4'>
@@ -30,6 +31,7 @@
             :showDeleteButton='false'
             @changeList='changeList'
             @markAsDone='markAsDone'
+            @onDrop="onDrop"
           />
         </div>
     </div>
@@ -61,12 +63,16 @@ export default {
       }
   },
   methods: {
+    async onDrop(payload){
+      this.updateTodo(payload.sender);
+      this.updateTodo(payload.receiver);
+    },
     async markAsDone(data){
       this.isLoading = true;
 
       let status = data.status === 'todo' ? 'done' : 'todo';
       let url = `${this.url}/?_id=${data.id}`;
-      let body = {status: status};
+      let body = {status: status, order:this.getOrder(status)};
       let res =  await fetch(url, { 
           method: 'PUT', 
           headers: { 
@@ -151,7 +157,7 @@ export default {
       
       console.log("Create sent...\nData passed to api:");
       console.log(JSON.stringify(data));
-
+      data.order = this.getOrder(data.status);
       const response = await fetch(this.url, {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
@@ -160,8 +166,42 @@ export default {
       await this.fetchTodos();
 
       this.isLoading = false;
-      
+
       return await response.json();
+    },
+    getOrder(type){
+      let maxOrderTodo = 0;
+      let maxOrderDone = 0;
+      //if todo have no order number, like the first ones
+      //we have to give they an order number before
+      //to after get the highest order number to give to our new todo
+      this.todos.map(async todo =>{
+        if(todo.order > maxOrderTodo){
+          maxOrderTodo = todo.order
+        }
+      });
+      this.done.map(async done => {
+        if(done.order > maxOrderDone){
+          maxOrderDone = done.order
+        }
+      });
+      return type == 'todo' ? ++maxOrderTodo : ++maxOrderDone
+    },
+    async updateTodo(data){
+      this.isLoading = true;
+
+      let url = `${this.url}/?_id=${data.id}`;
+      let res =  await fetch(url, { 
+          method: 'PUT', 
+          headers: { 
+              'Content-type': 'application/json'
+          },
+          body: JSON.stringify(data)
+      });
+      console.log(res);
+      this.fetchTodos();
+      
+      this.isLoading = false;
     }
   },
   async mounted(){

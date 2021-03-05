@@ -9,7 +9,8 @@
                     :showDeleteButton="showDeleteButton"
                     @deleteTodo="deleteTodo" 
                     @changeList='changeList'
-                    @markAsDone='markAsDone'   
+                    @markAsDone='markAsDone' 
+                    @onDrop="onDrop"  
                 />
             </div>
         </div>
@@ -37,6 +38,9 @@
             },
             async deleteTodo(todo){
                 this.$emit('deleteTodo', todo);
+            },
+            async onDrop(payload){
+                this.$emit('onDrop', payload);
             }
         }
     }
